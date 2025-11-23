@@ -1,5 +1,9 @@
-class Pedido{
-  Pedido(this.mesaId, this.numProductos, this.totalEuros);
+class Pedido {
+  Pedido({
+    required this.mesaId,
+    required this.numProductos,
+    required this.totalEuros,
+  });
   int mesaId;
   int numProductos;
   double totalEuros;
