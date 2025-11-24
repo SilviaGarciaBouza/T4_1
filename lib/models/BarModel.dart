@@ -21,12 +21,14 @@ class BarModel {
 
   Pedido crearPedido(int idMesa, List<Producto> listaProductos) {
     double totalEuros = 0;
+    int numeroProductosTotal = 0;
     for (Producto producto in listaProductos) {
-      totalEuros += producto.precio;
+      totalEuros += producto.precio * producto.cantidad;
+      numeroProductosTotal += producto.cantidad;
     }
     return Pedido(
       mesaId: idMesa,
-      numProductos: listaProductos.length,
+      numProductos: numeroProductosTotal,
       totalEuros: totalEuros,
     );
   }

@@ -36,14 +36,19 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
               ),
             ),
           ),
+
           Expanded(
             child: ElevatedButton(
               onPressed: () async {
-                final resultado = await Navigator.pushNamed(
+                final resultado = await Navigator.push(
                   context,
-                  Seleccionproductoview.routeName,
+                  MaterialPageRoute(
+                    builder: (context) => const Seleccionproductoview(),
+                  ),
                 );
-                if (resultado != null && resultado is List<Producto>) {
+                if (resultado != null &&
+                    resultado is List<Producto> &&
+                    mounted) {
                   setState(() {
                     listaProdutosTemporal = resultado;
                   });
@@ -52,6 +57,7 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
               child: Text("Añadir productos"),
             ),
           ),
+
           Row(
             children: [
               Flexible(
@@ -64,28 +70,35 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text(
-                            "Error: Introduce un id de mesa válido y añade productos.",
+                            "Introduce un id de mesa y productos válidos",
                           ),
                         ),
                       );
                       return;
                     }
 
-                    barViewModel.addPedido(
-                      Pedido(
-                        mesaId: parsedMesaId,
-                        numProductos: listaProdutosTemporal.length,
-                        totalEuros: listaProdutosTemporal
-                            .map((e) => e.precio * e.cantidad)
-                            .fold(0.0, (a, b) => a + b),
+                    final double totalCalculado = listaProdutosTemporal
+                        .map((e) => e.precio * e.cantidad)
+                        .fold(0.0, (a, b) => a + b);
+
+                    final Pedido nuevoPedido = Pedido(
+                      mesaId: parsedMesaId,
+                      //si lo q Querems es el numero total de producto tenndo en cnta la cant
+                      numProductos: listaProdutosTemporal.fold(
+                        0,
+                        (sum, p) => sum + p.cantidad,
                       ),
+
+                      // numProductos: listaProdutosTemporal.length,
+                      totalEuros: totalCalculado,
                     );
 
-                    Navigator.pop(context);
+                    Navigator.pop(context, nuevoPedido);
                   },
                   child: Text("Guardar pedido"),
                 ),
               ),
+
               Flexible(
                 child: ElevatedButton(
                   onPressed: () => Navigator.pop(context),
@@ -100,9 +113,7 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                     if (currentMesaId <= 0) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text(
-                            "Error: Introduce un id de mesa válido para ver el resumen.",
-                          ),
+                          content: Text("Introduce un id de mesa válido"),
                         ),
                       );
                       return;
