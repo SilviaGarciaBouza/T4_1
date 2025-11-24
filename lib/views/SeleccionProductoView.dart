@@ -24,6 +24,7 @@ class _SeleccionproductoviewState extends State<Seleccionproductoview> {
         children: [
           Row(
             children: [
+              Expanded(flex: 1, child: Text("Selección")),
               Expanded(flex: 1, child: Text("Nombre")),
               Expanded(flex: 1, child: Text("Precio")),
             ],
@@ -68,7 +69,14 @@ class _SeleccionproductoviewState extends State<Seleccionproductoview> {
             children: [
               Flexible(
                 child: ElevatedButton(
-                  onPressed: () => {Navigator.pop(context)},
+                  onPressed: () => {
+                    Navigator.pop(
+                      context,
+                      copiaLista
+                          .where((e) => e.esSeleccionado == true)
+                          .toList(),
+                    ),
+                  },
                   child: Text("Confirmar"),
                 ),
               ),

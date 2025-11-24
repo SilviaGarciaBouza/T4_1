@@ -18,10 +18,9 @@ class Crearpedidoview extends StatefulWidget {
 class _CrearpedidoviewState extends State<Crearpedidoview> {
   final TextEditingController controlador = TextEditingController();
   List<Producto> listaProdutosTemporal = [];
-
+  int? mesaId;
   @override
   Widget build(BuildContext context) {
-    List<Producto> listaProdutosTemporal = [];
     final barViewModel = Provider.of<BarViewModel>(context);
 
     return Scaffold(
@@ -45,9 +44,9 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                   context,
                   Seleccionproductoview.routeName,
                 );
-                if (resultado != null) {
+                if (resultado != null && resultado is List<Producto>) {
                   setState(() {
-                    this.listaProdutosTemporal = resultado as List<Producto>;
+                    listaProdutosTemporal = resultado;
                   });
 
                   print('Lista recibida: ${resultado.toString()}');
@@ -62,10 +61,10 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                 child: ElevatedButton(
                   onPressed: () {
                     final mesaIdText = controlador.text;
-                    final mesaId = int.tryParse(mesaIdText);
+                    this.mesaId = int.tryParse(mesaIdText);
 
                     if (mesaId == null ||
-                        mesaId <= 0 ||
+                        mesaId! <= 0 ||
                         listaProdutosTemporal.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
@@ -79,7 +78,7 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
 
                     barViewModel.addPedido(
                       Pedido(
-                        mesaId: mesaId,
+                        mesaId: mesaId!,
                         numProductos: listaProdutosTemporal.length,
                         totalEuros: listaProdutosTemporal
                             .map((e) => e.precio)
@@ -100,8 +99,14 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
               ),
               Flexible(
                 child: ElevatedButton(
-                  onPressed: () =>
-                      Navigator.pushNamed(context, ResumenfinalView.routeName),
+                  onPressed: () => Navigator.pushNamed(
+                    context,
+                    ResumenfinalView.routeName,
+                    arguments: {
+                      "productos": listaProdutosTemporal,
+                      "mesaId": mesaId,
+                    },
+                  ),
                   child: Text("Ver resumen"),
                 ),
               ),
