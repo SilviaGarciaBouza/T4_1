@@ -8,7 +8,6 @@ class ResumenfinalView extends StatelessWidget {
   const ResumenfinalView({super.key});
   @override
   Widget build(BuildContext context) {
-    //final barViewModel = Provider.of<BarViewModel>(context);
     final args = ModalRoute.of(context)?.settings.arguments;
     List<Producto> productosLista = [];
     int mesaId = -1;
@@ -25,28 +24,54 @@ class ResumenfinalView extends StatelessWidget {
         .fold(0.0, (a, b) => a + b);
 
     return Scaffold(
-      appBar: AppBar(title: Center(child: Text("Resumen de Pedido"))),
-      body: ListView(
-        children: [
-          Row(children: [Text("Id mesa: "), Text("$mesaId")]),
-          Row(
-            children: [
-              for (var producto in productosLista)
-                Flexible(
-                  child: Text(
-                    "${producto.cantidad} ${producto.name}: ${producto.precio}€  = ${producto.cantidad * producto.precio}",
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: Center(
+          child: Text("Resumen de pedido", style: TextStyle(color: Colors.red)),
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            ListView(
+              children: [
+                Row(children: [Text("Id mesa: "), Text("$mesaId")]),
+                Row(
+                  children: [
+                    for (var producto in productosLista)
+                      Flexible(
+                        child: Text(
+                          "${producto.cantidad} ${producto.name}: ${producto.precio}€  = ${producto.cantidad * producto.precio}",
+                        ),
+                      ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text("Total: "),
+                    Text("${total.toStringAsFixed(2)}  "),
+                  ],
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
+                    children: [
+                      ElevatedButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text("Volver"),
+                      ),
+                    ],
                   ),
                 ),
-            ],
-          ),
-          Row(
-            children: [Text("Total: "), Text("${total.toStringAsFixed(2)}  ")],
-          ),
-          ElevatedButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text("Volver"),
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

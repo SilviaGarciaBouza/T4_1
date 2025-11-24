@@ -34,7 +34,15 @@ class _SeleccionproductoviewState extends State<Seleccionproductoview> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: Center(child: Text("Selección de productos"))),
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: Center(
+          child: Text(
+            "Selección deproductos",
+            style: TextStyle(color: Colors.red),
+          ),
+        ),
+      ),
       body: Column(
         children: [
           Row(
@@ -95,7 +103,6 @@ class _SeleccionproductoviewState extends State<Seleccionproductoview> {
               },
             ),
           ),
-          // Botones de Confirmar/Cancelar
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(

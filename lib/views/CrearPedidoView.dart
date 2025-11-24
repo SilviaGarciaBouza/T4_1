@@ -23,21 +23,38 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
     final barViewModel = Provider.of<BarViewModel>(context);
 
     return Scaffold(
-      appBar: AppBar(title: Center(child: Text("Crea un nuevo pedido"))),
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: Center(
+          child: Text(
+            "Crea un nuevo pedido",
+            style: TextStyle(color: Colors.red),
+          ),
+        ),
+      ),
       body: Column(
         children: [
-          Expanded(
-            child: TextField(
-              controller: controlador,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Introduce el Nº de Mesa',
-              ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: controlador,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Introduce el Nº de Mesa',
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
 
-          Expanded(
+          Flexible(
             child: ElevatedButton(
               onPressed: () async {
                 final resultado = await Navigator.push(
@@ -58,80 +75,86 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
             ),
           ),
 
-          Row(
-            children: [
-              Flexible(
-                child: ElevatedButton(
-                  onPressed: () {
-                    final mesaIdText = controlador.text;
-                    final parsedMesaId = int.tryParse(mesaIdText) ?? -1;
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 
-                    if (parsedMesaId <= 0 || listaProdutosTemporal.isEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text(
-                            "Introduce un id de mesa y productos válidos",
+              children: [
+                Flexible(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      final mesaIdText = controlador.text;
+                      final parsedMesaId = int.tryParse(mesaIdText) ?? -1;
+
+                      if (parsedMesaId <= 0 || listaProdutosTemporal.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              "Introduce un id de mesa y productos válidos",
+                            ),
                           ),
+                        );
+                        return;
+                      }
+
+                      final double totalCalculado = listaProdutosTemporal
+                          .map((e) => e.precio * e.cantidad)
+                          .fold(0.0, (a, b) => a + b);
+
+                      final Pedido nuevoPedido = Pedido(
+                        mesaId: parsedMesaId,
+                        //si lo q Querems es el numero total de producto tenndo en cnta la cant
+                        numProductos: listaProdutosTemporal.fold(
+                          0,
+                          (sum, p) => sum + p.cantidad,
                         ),
+
+                        // numProductos: listaProdutosTemporal.length,
+                        totalEuros: totalCalculado,
                       );
-                      return;
-                    }
 
-                    final double totalCalculado = listaProdutosTemporal
-                        .map((e) => e.precio * e.cantidad)
-                        .fold(0.0, (a, b) => a + b);
-
-                    final Pedido nuevoPedido = Pedido(
-                      mesaId: parsedMesaId,
-                      //si lo q Querems es el numero total de producto tenndo en cnta la cant
-                      numProductos: listaProdutosTemporal.fold(
-                        0,
-                        (sum, p) => sum + p.cantidad,
-                      ),
-
-                      // numProductos: listaProdutosTemporal.length,
-                      totalEuros: totalCalculado,
-                    );
-
-                    Navigator.pop(context, nuevoPedido);
-                  },
-                  child: Text("Guardar pedido"),
+                      Navigator.pop(context, nuevoPedido);
+                    },
+                    child: Text("Guardar pedido"),
+                  ),
                 ),
-              ),
 
-              Flexible(
-                child: ElevatedButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: Text("Cancelar"),
+                Flexible(
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text("Cancelar"),
+                  ),
                 ),
-              ),
-              Flexible(
-                child: ElevatedButton(
-                  onPressed: () {
-                    final currentMesaId = int.tryParse(controlador.text) ?? -1;
+                Flexible(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      final currentMesaId =
+                          int.tryParse(controlador.text) ?? -1;
 
-                    if (currentMesaId <= 0) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Introduce un id de mesa válido"),
-                        ),
+                      if (currentMesaId <= 0) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Introduce un id de mesa válido"),
+                          ),
+                        );
+                        return;
+                      }
+
+                      Navigator.pushNamed(
+                        context,
+                        ResumenfinalView.routeName,
+                        arguments: {
+                          "productos": listaProdutosTemporal,
+                          "mesaId": currentMesaId,
+                        },
                       );
-                      return;
-                    }
-
-                    Navigator.pushNamed(
-                      context,
-                      ResumenfinalView.routeName,
-                      arguments: {
-                        "productos": listaProdutosTemporal,
-                        "mesaId": currentMesaId,
-                      },
-                    );
-                  },
-                  child: Text("Ver resumen"),
+                    },
+                    child: Text("Ver resumen"),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),
