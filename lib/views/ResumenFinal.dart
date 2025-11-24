@@ -21,7 +21,7 @@ class ResumenfinalView extends StatelessWidget {
       }
     }
     final double total = productosLista
-        .map((e) => e.precio)
+        .map((e) => e.precio * e.cantidad)
         .fold(0.0, (a, b) => a + b);
 
     return Scaffold(
@@ -33,11 +33,15 @@ class ResumenfinalView extends StatelessWidget {
             children: [
               for (var producto in productosLista)
                 Flexible(
-                  child: Text("${producto.name}: ${producto.precio}€  "),
+                  child: Text(
+                    "${producto.cantidad} ${producto.name}: ${producto.precio}€  = ${producto.cantidad * producto.precio}",
+                  ),
                 ),
             ],
           ),
-          Row(children: [Text("Total: "), Text("${total.toStringAsFixed(2)}")]),
+          Row(
+            children: [Text("Total: "), Text("${total.toStringAsFixed(2)}  ")],
+          ),
           ElevatedButton(
             onPressed: () => Navigator.pop(context),
             child: Text("Volver"),

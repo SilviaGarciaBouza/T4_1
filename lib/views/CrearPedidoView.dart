@@ -47,8 +47,6 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                   setState(() {
                     listaProdutosTemporal = resultado;
                   });
-
-                  print('Lista recibida: ${resultado.toString()}');
                 }
               },
               child: Text("Añadir productos"),
@@ -78,7 +76,7 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                         mesaId: parsedMesaId,
                         numProductos: listaProdutosTemporal.length,
                         totalEuros: listaProdutosTemporal
-                            .map((e) => e.precio)
+                            .map((e) => e.precio * e.cantidad)
                             .fold(0.0, (a, b) => a + b),
                       ),
                     );

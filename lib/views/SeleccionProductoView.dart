@@ -12,81 +12,115 @@ class Seleccionproductoview extends StatefulWidget {
 }
 
 class _SeleccionproductoviewState extends State<Seleccionproductoview> {
+  bool initialized = false;
+
+  List<int> numeros = List<int>.generate(21, (i) => i);
+  late List<Producto> copiaLista;
+
   @override
   Widget build(BuildContext context) {
     final barViewModel = Provider.of<BarViewModel>(context);
-    List<Producto> copiaLista = barViewModel.getListaProductos();
-    final List<Producto> productosSeleccionados = [];
-    bool isSelect = false;
+
+    if (!initialized) {
+      copiaLista = barViewModel.getListaProductos().map((p) {
+        return Producto(
+          name: p.name,
+          precio: p.precio,
+          esSeleccionado: p.esSeleccionado,
+          cantidad: 0,
+        );
+      }).toList();
+      initialized = true;
+    }
+
     return Scaffold(
       appBar: AppBar(title: Center(child: Text("Selección de productos"))),
       body: Column(
         children: [
           Row(
             children: [
-              Expanded(flex: 1, child: Text("Selección")),
-              Expanded(flex: 1, child: Text("Nombre")),
-              Expanded(flex: 1, child: Text("Precio")),
+              Expanded(flex: 2, child: Center(child: Text("Cantidad"))),
+              Expanded(
+                flex: 3,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text("Nombre"),
+                ),
+              ),
+              Expanded(flex: 2, child: Text("Precio")),
             ],
           ),
+          const Divider(),
           Expanded(
             child: ListView.builder(
-              itemCount: barViewModel.getListaProductos().length,
+              itemCount: copiaLista.length,
               itemBuilder: (context, index) {
+                var producto = copiaLista[index];
                 return Row(
                   children: [
                     Expanded(
-                      flex: 1,
-                      child: Checkbox(
-                        value: copiaLista[index].esSeleccionado,
-                        onChanged: (bool? newValue) {
-                          setState(() {
-                            copiaLista[index].esSeleccionado =
-                                !copiaLista[index].esSeleccionado;
-                          });
-                        },
+                      flex: 2,
+                      child: Center(
+                        child: DropdownButton<int>(
+                          value: producto.cantidad,
+
+                          onChanged: (int? nuevoValor) {
+                            setState(() {
+                              copiaLista[index].cantidad = nuevoValor ?? 0;
+                            });
+                          },
+
+                          items: numeros.map<DropdownMenuItem<int>>((
+                            int numero,
+                          ) {
+                            return DropdownMenuItem<int>(
+                              value: numero,
+                              child: Text(numero.toString()),
+                            );
+                          }).toList(),
+                        ),
                       ),
                     ),
+
                     Expanded(
-                      flex: 1,
-                      child: Text(barViewModel.getListaProductos()[index].name),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Text(
-                        barViewModel
-                            .getListaProductos()[index]
-                            .precio
-                            .toString(),
+                      flex: 3,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Text(producto.name),
                       ),
                     ),
+                    Expanded(flex: 2, child: Text(producto.precio.toString())),
                   ],
                 );
               },
             ),
           ),
-          Row(
-            children: [
-              Flexible(
-                child: ElevatedButton(
-                  onPressed: () => {
-                    Navigator.pop(
-                      context,
-                      copiaLista
-                          .where((e) => e.esSeleccionado == true)
-                          .toList(),
-                    ),
-                  },
-                  child: Text("Confirmar"),
+          // Botones de Confirmar/Cancelar
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Flexible(
+                  child: ElevatedButton(
+                    onPressed: () => {
+                      Navigator.pop(
+                        context,
+                        copiaLista.where((e) => e.cantidad > 0).toList(),
+                      ),
+                    },
+                    child: const Text("Confirmar"),
+                  ),
                 ),
-              ),
-              Flexible(
-                child: ElevatedButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: Text("Cancelar"),
+                const SizedBox(width: 10),
+                Flexible(
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text("Cancelar"),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),
