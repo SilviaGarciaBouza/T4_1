@@ -28,11 +28,16 @@ class ResumenfinalView extends StatelessWidget {
       appBar: AppBar(title: Center(child: Text("Resumen de Pedido"))),
       body: ListView(
         children: [
-          Row(children: [Text("Id mesa: "), Text("${mesaId.toString}")]),
+          Row(children: [Text("Id mesa: "), Text("$mesaId")]),
           Row(
-            children: [Text("Productor: "), Text("${productosLista.length}")],
+            children: [
+              for (var producto in productosLista)
+                Flexible(
+                  child: Text("${producto.name}: ${producto.precio}€  "),
+                ),
+            ],
           ),
-          Row(children: [Text("Total: "), Text("$total")]),
+          Row(children: [Text("Total: "), Text("${total.toStringAsFixed(2)}")]),
           ElevatedButton(
             onPressed: () => Navigator.pop(context),
             child: Text("Volver"),

@@ -47,6 +47,7 @@ class HomeWiew extends StatelessWidget {
                         barViewModel
                             .getListaPedidos()[index]
                             .totalEuros
+                            .toStringAsFixed(2)
                             .toString(),
                       ),
                     ),

@@ -18,7 +18,6 @@ class Crearpedidoview extends StatefulWidget {
 class _CrearpedidoviewState extends State<Crearpedidoview> {
   final TextEditingController controlador = TextEditingController();
   List<Producto> listaProdutosTemporal = [];
-  int? mesaId;
   @override
   Widget build(BuildContext context) {
     final barViewModel = Provider.of<BarViewModel>(context);
@@ -61,11 +60,9 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                 child: ElevatedButton(
                   onPressed: () {
                     final mesaIdText = controlador.text;
-                    this.mesaId = int.tryParse(mesaIdText);
+                    final parsedMesaId = int.tryParse(mesaIdText) ?? -1;
 
-                    if (mesaId == null ||
-                        mesaId! <= 0 ||
-                        listaProdutosTemporal.isEmpty) {
+                    if (parsedMesaId <= 0 || listaProdutosTemporal.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text(
@@ -78,7 +75,7 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
 
                     barViewModel.addPedido(
                       Pedido(
-                        mesaId: mesaId!,
+                        mesaId: parsedMesaId,
                         numProductos: listaProdutosTemporal.length,
                         totalEuros: listaProdutosTemporal
                             .map((e) => e.precio)
@@ -99,14 +96,29 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
               ),
               Flexible(
                 child: ElevatedButton(
-                  onPressed: () => Navigator.pushNamed(
-                    context,
-                    ResumenfinalView.routeName,
-                    arguments: {
-                      "productos": listaProdutosTemporal,
-                      "mesaId": mesaId,
-                    },
-                  ),
+                  onPressed: () {
+                    final currentMesaId = int.tryParse(controlador.text) ?? -1;
+
+                    if (currentMesaId <= 0) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                            "Error: Introduce un id de mesa válido para ver el resumen.",
+                          ),
+                        ),
+                      );
+                      return;
+                    }
+
+                    Navigator.pushNamed(
+                      context,
+                      ResumenfinalView.routeName,
+                      arguments: {
+                        "productos": listaProdutosTemporal,
+                        "mesaId": currentMesaId,
+                      },
+                    );
+                  },
                   child: Text("Ver resumen"),
                 ),
               ),
