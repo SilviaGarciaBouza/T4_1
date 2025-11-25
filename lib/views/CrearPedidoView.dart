@@ -60,7 +60,9 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                 final resultado = await Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const Seleccionproductoview(),
+                    builder: (context) => Seleccionproductoview(
+                      productosSeleccionadosAnteriores: listaProdutosTemporal,
+                    ),
                   ),
                 );
                 if (resultado != null &&
@@ -136,6 +138,14 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text("Introduce un id de mesa válido"),
+                          ),
+                        );
+                        return;
+                      }
+                      if (listaProdutosTemporal.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Añadir algún producto."),
                           ),
                         );
                         return;

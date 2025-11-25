@@ -14,9 +14,13 @@ class ResumenfinalView extends StatelessWidget {
     if (args is Map<String, dynamic>) {
       if (args["productos"] is List) {
         productosLista = List<Producto>.from(args["productos"]);
+      } else {
+        productosLista = [];
       }
       if (args["mesaId"] is int) {
         mesaId = args["mesaId"];
+      } else {
+        mesaId = -1;
       }
     }
     final double total = productosLista
@@ -32,43 +36,55 @@ class ResumenfinalView extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+
           children: [
-            ListView(
-              children: [
-                Row(children: [Text("Id mesa: "), Text("$mesaId")]),
-                Row(
-                  children: [
-                    for (var producto in productosLista)
-                      Flexible(
-                        child: Text(
-                          "${producto.cantidad} ${producto.name}: ${producto.precio}€  = ${producto.cantidad * producto.precio}",
+            Row(children: [Text("Id mesa: "), Text("$mesaId")]),
+
+            Flexible(
+              child: ListView.builder(
+                itemCount: productosLista.length,
+                itemBuilder: (context, index) {
+                  final producto = productosLista[index];
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4.0),
+                    child: Row(
+                      children: [
+                        Expanded(child: Text(producto.cantidad.toString())),
+                        Expanded(child: Text(producto.name)),
+                        Expanded(
+                          child: Text(
+                            (producto.cantidad * producto.precio)
+                                .toStringAsFixed(2),
+                          ),
                         ),
-                      ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text("Total: "),
-                    Text("${total.toStringAsFixed(2)}  "),
-                  ],
-                ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
 
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-
-                    children: [
-                      ElevatedButton(
-                        onPressed: () => Navigator.pop(context),
-                        child: Text("Volver"),
-                      ),
-                    ],
-                  ),
-                ),
+            Row(
+              children: [
+                Text("Total: "),
+                Text("${total.toStringAsFixed(2)}  "),
               ],
+            ),
+
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
+                children: [
+                  ElevatedButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text("Volver"),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

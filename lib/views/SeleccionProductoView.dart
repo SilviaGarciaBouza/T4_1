@@ -5,8 +5,11 @@ import 'package:t4_1/viewmodels/BarViewModel.dart';
 
 class Seleccionproductoview extends StatefulWidget {
   static const routeName = '/seleccionarproductos';
-  const Seleccionproductoview({super.key});
-
+  const Seleccionproductoview({
+    super.key,
+    this.productosSeleccionadosAnteriores = const [],
+  });
+  final List<Producto> productosSeleccionadosAnteriores;
   @override
   State<Seleccionproductoview> createState() => _SeleccionproductoviewState();
 }
@@ -22,12 +25,20 @@ class _SeleccionproductoviewState extends State<Seleccionproductoview> {
     final barViewModel = Provider.of<BarViewModel>(context);
 
     if (!initialized) {
+      final listaBase = barViewModel.getListaProductos();
+
+      final mapaSeleccionados = {
+        for (var p in widget.productosSeleccionadosAnteriores)
+          p.name: p.cantidad,
+      };
+
       copiaLista = barViewModel.getListaProductos().map((p) {
+        int cantidadAnterior = mapaSeleccionados[p.name] ?? 0;
         return Producto(
           name: p.name,
           precio: p.precio,
           esSeleccionado: p.esSeleccionado,
-          cantidad: 0,
+          cantidad: cantidadAnterior,
         );
       }).toList();
       initialized = true;
