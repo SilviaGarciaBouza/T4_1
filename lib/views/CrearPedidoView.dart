@@ -64,7 +64,7 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                       productosSeleccionadosAnteriores: listaProdutosTemporal,
                     ),
                   ),
-                );
+                );if (!mounted) return;
                 if (resultado != null &&
                     resultado is List<Producto> &&
                     mounted) {
@@ -89,7 +89,7 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                       final mesaIdText = controlador.text;
                       final parsedMesaId = int.tryParse(mesaIdText) ?? -1;
 
-                      if (parsedMesaId <= 0 || listaProdutosTemporal.isEmpty) {
+                      if (parsedMesaId <= 0 || listaProdutosTemporal.isEmpty || barViewModel.getListaPedidos().map((e)=> e.mesaId).contains(parsedMesaId)) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text(
@@ -104,19 +104,17 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                           .map((e) => e.precio * e.cantidad)
                           .fold(0.0, (a, b) => a + b);
 
-                      final Pedido nuevoPedido = Pedido(
+                      final Pedido pedidoCompleto = Pedido(
                         mesaId: parsedMesaId,
-                        //si lo q Querems es el numero total de producto tenndo en cnta la cant
                         numProductos: listaProdutosTemporal.fold(
                           0,
                           (sum, p) => sum + p.cantidad,
                         ),
 
-                        // numProductos: listaProdutosTemporal.length,
                         totalEuros: totalCalculado,
                       );
 
-                      Navigator.pop(context, nuevoPedido);
+                      Navigator.pop(context, pedidoCompleto);
                     },
                     child: Text("Guardar pedido"),
                   ),

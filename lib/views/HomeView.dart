@@ -29,7 +29,7 @@ class _HomeWiewState extends State<HomeWiew> {
             padding: const EdgeInsets.all(16.0),
             child: Row(
               children: [
-                Expanded(flex: 1, child: Text("Nº mesa")),
+                Expanded(flex: 1, child: Text("Mesa")),
                 Expanded(flex: 1, child: Text("Nº productos")),
                 Expanded(flex: 1, child: Text("Total")),
               ],
@@ -65,11 +65,7 @@ class _HomeWiewState extends State<HomeWiew> {
                       Expanded(
                         flex: 1,
                         child: Text(
-                          barViewModel
-                              .getListaPedidos()[index]
-                              .totalEuros
-                              .toStringAsFixed(2)
-                              .toString(),
+                          "${barViewModel.getListaPedidos()[index].totalEuros.toStringAsFixed(2).toString()}€",
                         ),
                       ),
                     ],
@@ -88,12 +84,15 @@ class _HomeWiewState extends State<HomeWiew> {
                     builder: (context) => const Crearpedidoview(),
                   ),
                 );
+                if (!mounted) return;
 
                 if (resultado != null && resultado is Pedido && mounted) {
-                  barViewModel.addPedido(resultado);
+                  setState(() {
+                    barViewModel.addPedido(resultado);
+                  });
                 }
               },
-              child: Text("Añadir pedido"),
+              child: Text("Nuevo pedido"),
             ),
           ),
         ],

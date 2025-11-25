@@ -108,7 +108,7 @@ class _SeleccionproductoviewState extends State<Seleccionproductoview> {
                         child: Text(producto.name),
                       ),
                     ),
-                    Expanded(flex: 2, child: Text(producto.precio.toString())),
+                    Expanded(flex: 2, child: Text("${producto.precio.toString()}€")),
                   ],
                 );
               },
@@ -121,6 +121,7 @@ class _SeleccionproductoviewState extends State<Seleccionproductoview> {
               children: [
                 Flexible(
                   child: ElevatedButton(
+                   
                     onPressed: () => {
                       Navigator.pop(
                         context,

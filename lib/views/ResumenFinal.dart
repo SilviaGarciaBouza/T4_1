@@ -55,8 +55,8 @@ class ResumenfinalView extends StatelessWidget {
                         Expanded(child: Text(producto.name)),
                         Expanded(
                           child: Text(
-                            (producto.cantidad * producto.precio)
-                                .toStringAsFixed(2),
+                           "${(producto.cantidad * producto.precio)
+                                .toStringAsFixed(2)}€",
                           ),
                         ),
                       ],
@@ -69,7 +69,7 @@ class ResumenfinalView extends StatelessWidget {
             Row(
               children: [
                 Text("Total: "),
-                Text("${total.toStringAsFixed(2)}  "),
+                Text("${total.toStringAsFixed(2)}€"),
               ],
             ),
 
