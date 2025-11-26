@@ -35,11 +35,18 @@ class BarModel {
 
   List<Producto> listaProductos = [
     Producto(name: "Cafe", precio: 1.5),
-    Producto(name: "Zumo", precio: 2.3),
-    Producto(name: "Chocolate", precio: 2.0),
-    Producto(name: "Descafeinado", precio: 1.4),
-    Producto(name: "Batido", precio: 2.8),
+    Producto(name: "Descafeinado", precio: 2.3),
+    Producto(name: "Espresso", precio: 2.0),
+    Producto(name: "Cappuccino", precio: 1.4),
+    Producto(name: "Mocha", precio: 2.8),
     Producto(name: "Té", precio: 1.7),
+    Producto(name: "Tila", precio: 1.5),
+    Producto(name: "Manzanilla", precio: 2.3),
+    Producto(name: "Menta", precio: 2.0),
+    Producto(name: "Rooibos", precio: 1.4),
+    Producto(name: "Batido", precio: 2.8),
+    Producto(name: "Zumo", precio: 1.7),
+    Producto(name: "Agua", precio: 1.7),
   ];
 
   void addProducto(Producto p) {

@@ -45,12 +45,32 @@ class _SeleccionproductoviewState extends State<Seleccionproductoview> {
     }
 
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 249, 239, 223),
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: const Color.fromARGB(255, 249, 239, 223),
+
         title: Center(
-          child: Text(
-            "Selección deproductos",
-            style: TextStyle(color: Colors.red),
+          child: Card(
+            color: const Color.fromARGB(255, 148, 189, 177),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24.0),
+            ),
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: 8.0,
+                bottom: 8.0,
+                left: 32.0,
+                right: 32.0,
+              ),
+              child: Text(
+                "Selección productos",
+                style: TextStyle(
+                  color: Colors.brown,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                ),
+              ),
+            ),
           ),
         ),
       ),
@@ -69,7 +89,7 @@ class _SeleccionproductoviewState extends State<Seleccionproductoview> {
               Expanded(flex: 2, child: Text("Precio")),
             ],
           ),
-          const Divider(),
+          Divider(color: Colors.red, height: 1),
           Expanded(
             child: ListView.builder(
               itemCount: copiaLista.length,
@@ -108,7 +128,10 @@ class _SeleccionproductoviewState extends State<Seleccionproductoview> {
                         child: Text(producto.name),
                       ),
                     ),
-                    Expanded(flex: 2, child: Text("${producto.precio.toString()}€")),
+                    Expanded(
+                      flex: 2,
+                      child: Text("${producto.precio.toString()}€"),
+                    ),
                   ],
                 );
               },
@@ -121,13 +144,20 @@ class _SeleccionproductoviewState extends State<Seleccionproductoview> {
               children: [
                 Flexible(
                   child: ElevatedButton(
-                   
                     onPressed: () => {
                       Navigator.pop(
                         context,
                         copiaLista.where((e) => e.cantidad > 0).toList(),
                       ),
                     },
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all<Color>(
+                        Colors.black,
+                      ),
+                      foregroundColor: WidgetStateProperty.all<Color>(
+                        Colors.red,
+                      ),
+                    ),
                     child: const Text("Confirmar"),
                   ),
                 ),
@@ -135,6 +165,14 @@ class _SeleccionproductoviewState extends State<Seleccionproductoview> {
                 Flexible(
                   child: ElevatedButton(
                     onPressed: () => Navigator.pop(context),
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all<Color>(
+                        Colors.red,
+                      ),
+                      foregroundColor: WidgetStateProperty.all<Color>(
+                        Colors.black,
+                      ),
+                    ),
                     child: const Text("Cancelar"),
                   ),
                 ),

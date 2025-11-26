@@ -23,19 +23,39 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
     final barViewModel = Provider.of<BarViewModel>(context);
 
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 249, 239, 223),
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: const Color.fromARGB(255, 249, 239, 223),
+
         title: Center(
-          child: Text(
-            "Crea un nuevo pedido",
-            style: TextStyle(color: Colors.red),
+          child: Card(
+            color: const Color.fromARGB(255, 148, 189, 177),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24.0),
+            ),
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: 8.0,
+                bottom: 8.0,
+                left: 32.0,
+                right: 32.0,
+              ),
+              child: Text(
+                "Crea un nuevo pedido",
+                style: TextStyle(
+                  color: Colors.brown,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                ),
+              ),
+            ),
           ),
         ),
       ),
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(16.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 
@@ -47,14 +67,32 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Introduce el Nº de Mesa',
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide: const BorderSide(
+                          color: Color.fromARGB(255, 148, 189, 177),
+                          width: 2,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide: const BorderSide(
+                          color: Color(0xFFFFAC8D),
+                          width: 3,
+                        ),
+                      ),
+
+                      filled: true,
+                      fillColor: Colors.white,
                     ),
                   ),
                 ),
               ],
             ),
           ),
-
-          Flexible(
+          Spacer(),
+          Center(
             child: ElevatedButton(
               onPressed: () async {
                 final resultado = await Navigator.push(
@@ -64,7 +102,8 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                       productosSeleccionadosAnteriores: listaProdutosTemporal,
                     ),
                   ),
-                );if (!mounted) return;
+                );
+                if (!mounted) return;
                 if (resultado != null &&
                     resultado is List<Producto> &&
                     mounted) {
@@ -73,12 +112,33 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                   });
                 }
               },
-              child: Text("Añadir productos"),
+              style: ButtonStyle(
+                backgroundColor: WidgetStateProperty.all<Color>(
+                  Color(0xFFFFAC8D),
+                ),
+                foregroundColor: WidgetStateProperty.all<Color>(Colors.brown),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Flexible(child: Icon(Icons.coffee)),
+                  SizedBox(width: 8),
+                  Flexible(
+                    child: Text(
+                      "Añadir productos",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
+            child: Divider(color: Colors.purpleAccent, height: 1),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 
@@ -89,7 +149,12 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                       final mesaIdText = controlador.text;
                       final parsedMesaId = int.tryParse(mesaIdText) ?? -1;
 
-                      if (parsedMesaId <= 0 || listaProdutosTemporal.isEmpty || barViewModel.getListaPedidos().map((e)=> e.mesaId).contains(parsedMesaId)) {
+                      if (parsedMesaId <= 0 ||
+                          listaProdutosTemporal.isEmpty ||
+                          barViewModel
+                              .getListaPedidos()
+                              .map((e) => e.mesaId)
+                              .contains(parsedMesaId)) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text(
@@ -116,16 +181,53 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
 
                       Navigator.pop(context, pedidoCompleto);
                     },
-                    child: Text("Guardar pedido"),
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all<Color>(
+                        Color.fromARGB(255, 148, 189, 177),
+                      ),
+                      foregroundColor: WidgetStateProperty.all<Color>(
+                        Colors.brown,
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Flexible(
+                          child: Text(
+                            "Guardar pedido",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
 
                 Flexible(
                   child: ElevatedButton(
                     onPressed: () => Navigator.pop(context),
-                    child: Text("Cancelar"),
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all<Color>(
+                        Color(0xFFFFAC8D),
+                      ),
+                      foregroundColor: WidgetStateProperty.all<Color>(
+                        Colors.white,
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Flexible(
+                          child: Text(
+                            "Cancelar",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
+
                 Flexible(
                   child: ElevatedButton(
                     onPressed: () {
@@ -158,7 +260,25 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                         },
                       );
                     },
-                    child: Text("Ver resumen"),
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all<Color>(
+                        Color.fromARGB(255, 148, 189, 177),
+                      ),
+                      foregroundColor: WidgetStateProperty.all<Color>(
+                        Colors.brown,
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Flexible(
+                          child: Text(
+                            "Ver resumen",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
