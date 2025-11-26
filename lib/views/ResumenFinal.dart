@@ -140,6 +140,7 @@ class ResumenfinalView extends StatelessWidget {
                         child: Row(
                           children: [
                             Expanded(
+                              flex: 1,
                               child: Text(
                                 producto.cantidad.toString(),
                                 style: TextStyle(
@@ -149,6 +150,7 @@ class ResumenfinalView extends StatelessWidget {
                               ),
                             ),
                             Expanded(
+                              flex: 1,
                               child: Text(
                                 producto.name,
                                 style: TextStyle(color: Colors.grey),
@@ -156,6 +158,7 @@ class ResumenfinalView extends StatelessWidget {
                               ),
                             ),
                             Expanded(
+                              flex: 1,
                               child: Text(
                                 "${(producto.cantidad * producto.precio).toStringAsFixed(2)}€",
 

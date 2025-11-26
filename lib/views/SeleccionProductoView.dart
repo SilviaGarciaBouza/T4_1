@@ -110,7 +110,7 @@ class _SeleccionproductoviewState extends State<Seleccionproductoview> {
                   Expanded(
                     flex: 1,
                     child: Text(
-                      "Pecio",
+                      "Precio",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.grey,
@@ -132,10 +132,15 @@ class _SeleccionproductoviewState extends State<Seleccionproductoview> {
                 itemCount: copiaLista.length,
                 itemBuilder: (context, index) {
                   var producto = copiaLista[index];
-                  return Row(
+                  return  Padding(
+              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+              child: 
+
+                  Row(
                     children: [
+                      
                       Expanded(
-                        flex: 2,
+                        flex: 1,
                         child: Center(
                           child: DropdownButton<int>(
                             value: producto.cantidad,
@@ -159,18 +164,16 @@ class _SeleccionproductoviewState extends State<Seleccionproductoview> {
                       ),
 
                       Expanded(
-                        flex: 3,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Text(producto.name),
-                        ),
+                        flex: 1,
+                        child:  Text(producto.name, textAlign: TextAlign.center,),
+                        
                       ),
                       Expanded(
-                        flex: 2,
-                        child: Text("${producto.precio.toString()}€"),
+                        flex: 1,
+                        child: Text("${producto.precio.toString()}€", textAlign: TextAlign.center,),
                       ),
                     ],
-                  );
+                  ));
                 },
               ),
             ),
