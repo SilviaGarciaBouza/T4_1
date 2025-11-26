@@ -194,7 +194,7 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                       children: [
                         Flexible(
                           child: Text(
-                            "Guardar pedido",
+                            "Guardar",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
@@ -273,7 +273,7 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                       children: [
                         Flexible(
                           child: Text(
-                            "Ver resumen",
+                            "Resumen",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
