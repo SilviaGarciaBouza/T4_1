@@ -1,28 +1,19 @@
-Esta es una aplicación móvil desarrollada en **Flutter** para gestionar pedidos de un bar, implementando la arquitectura **Model-View-ViewModel (MVVM)** y diversas técnicas de navegación.
+# El proyecto
 
-# Arquitectura y Tecnología
+Este proyecto consiste en una aplicación multiplataforma, desarrollada utilizando **Flutter** para gestionar los pedidos de un bar, utilizando el patrón **Model-View-ViewModel (MVVM)** y técnicas de **navegación**.
 
-- **Arquitectura:** MVVM (Model, ViewModel, View).
-- **Estado:** Gestionado mediante **Provider** (`ChangeNotifier`).
+# Tecnología
+
+- **Arquitectura:** MVVM.
 - **Lenguaje:** Dart.
-- **UI/UX:** Estilo de alto contraste **Negro y Rojo**.
+- **Framework:** Flutter.
 
-# Flujo de Navegación Clave
+# Flujo de Navegación
 
-El proyecto cumple con los requisitos de navegación de la tarea:
+El proyecto utiliza dos tipos de navegación:
 
-1.  **Home ➡️ Crear Pedido:** Navegación **Imperativa** (`Navigator.push`).
-    - _Home_ espera el resultado (objeto `Pedido`) para añadirlo a la lista.
-    - _Home_ usa la validación `if (resultado is Pedido && mounted)`.
-2.  **Crear Pedido ➡️ Selección Productos:** Navegación **Imperativa** (`Navigator.push`).
-    - _Crear Pedido_ espera el resultado (`List<Producto>`) y usa `setState` con `mounted`.
-3.  **Crear Pedido ➡️ Ver Resumen:** Navegación con **Ruta con Nombre** (`Navigator.pushNamed`).
-
-# Puntos Clave del Proyecto
-
-- Implementación correcta del cálculo de `numProductos` (suma de cantidades).
-- Validación obligatoria de `mesaId` y `productos` antes de guardar.
-- El botón "Guardar Pedido" devuelve el objeto `Pedido` completo usando `Navigator.pop(context, pedidoCompleto)`.
+- Navegación **Imperativa** (`Navigator.push`).
+- Navegación con **Ruta con Nombre** (`Navigator.pushNamed`).
 
 # Uso
 

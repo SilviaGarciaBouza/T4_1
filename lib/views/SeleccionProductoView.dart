@@ -74,112 +74,170 @@ class _SeleccionproductoviewState extends State<Seleccionproductoview> {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Row(
-            children: [
-              Expanded(flex: 2, child: Center(child: Text("Cantidad"))),
-              Expanded(
-                flex: 3,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Text("Nombre"),
-                ),
+      body: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Text(
+                      "Cantidad",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey,
+                        fontSize: 14,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Text(
+                      "Producto",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey,
+                        fontSize: 14,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Text(
+                      "Pecio",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey,
+                        fontSize: 14,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
               ),
-              Expanded(flex: 2, child: Text("Precio")),
-            ],
-          ),
-          Divider(color: Colors.red, height: 1),
-          Expanded(
-            child: ListView.builder(
-              itemCount: copiaLista.length,
-              itemBuilder: (context, index) {
-                var producto = copiaLista[index];
-                return Row(
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Center(
-                        child: DropdownButton<int>(
-                          value: producto.cantidad,
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 16.0, right: 16.0),
+              child: Divider(color: Colors.purpleAccent, height: 1),
+            ),
 
-                          onChanged: (int? nuevoValor) {
-                            setState(() {
-                              copiaLista[index].cantidad = nuevoValor ?? 0;
-                            });
-                          },
+            Expanded(
+              child: ListView.builder(
+                itemCount: copiaLista.length,
+                itemBuilder: (context, index) {
+                  var producto = copiaLista[index];
+                  return Row(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: Center(
+                          child: DropdownButton<int>(
+                            value: producto.cantidad,
 
-                          items: numeros.map<DropdownMenuItem<int>>((
-                            int numero,
-                          ) {
-                            return DropdownMenuItem<int>(
-                              value: numero,
-                              child: Text(numero.toString()),
-                            );
-                          }).toList(),
+                            onChanged: (int? nuevoValor) {
+                              setState(() {
+                                copiaLista[index].cantidad = nuevoValor ?? 0;
+                              });
+                            },
+
+                            items: numeros.map<DropdownMenuItem<int>>((
+                              int numero,
+                            ) {
+                              return DropdownMenuItem<int>(
+                                value: numero,
+                                child: Text(numero.toString()),
+                              );
+                            }).toList(),
+                          ),
                         ),
                       ),
-                    ),
 
-                    Expanded(
-                      flex: 3,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Text(producto.name),
+                      Expanded(
+                        flex: 3,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Text(producto.name),
+                        ),
                       ),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: Text("${producto.precio.toString()}€"),
-                    ),
-                  ],
-                );
-              },
+                      Expanded(
+                        flex: 2,
+                        child: Text("${producto.precio.toString()}€"),
+                      ),
+                    ],
+                  );
+                },
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Flexible(
-                  child: ElevatedButton(
-                    onPressed: () => {
-                      Navigator.pop(
-                        context,
-                        copiaLista.where((e) => e.cantidad > 0).toList(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Flexible(
+                    child: ElevatedButton(
+                      onPressed: () => {
+                        Navigator.pop(
+                          context,
+                          copiaLista.where((e) => e.cantidad > 0).toList(),
+                        ),
+                      },
+                      style: ButtonStyle(
+                        backgroundColor: WidgetStateProperty.all<Color>(
+                          const Color.fromARGB(255, 148, 189, 177),
+                        ),
+                        foregroundColor: WidgetStateProperty.all<Color>(
+                          Colors.brown,
+                        ),
                       ),
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStateProperty.all<Color>(
-                        Colors.black,
-                      ),
-                      foregroundColor: WidgetStateProperty.all<Color>(
-                        Colors.red,
-                      ),
-                    ),
-                    child: const Text("Confirmar"),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Flexible(
-                  child: ElevatedButton(
-                    onPressed: () => Navigator.pop(context),
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStateProperty.all<Color>(
-                        Colors.red,
-                      ),
-                      foregroundColor: WidgetStateProperty.all<Color>(
-                        Colors.black,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Flexible(
+                            child: Text(
+                              "Confirmar",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    child: const Text("Cancelar"),
                   ),
-                ),
-              ],
+                  const SizedBox(width: 10),
+                  Flexible(
+                    child: ElevatedButton(
+                      onPressed: () => Navigator.pop(context),
+                      style: ButtonStyle(
+                        backgroundColor: WidgetStateProperty.all<Color>(
+                          Color(0xFFFFAC8D),
+                        ),
+                        foregroundColor: WidgetStateProperty.all<Color>(
+                          Colors.white,
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Flexible(
+                            child: Text(
+                              "Cancelar",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

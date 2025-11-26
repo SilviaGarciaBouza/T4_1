@@ -262,7 +262,7 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                     },
                     style: ButtonStyle(
                       backgroundColor: WidgetStateProperty.all<Color>(
-                        Color.fromARGB(255, 148, 189, 177),
+                        Color(0xFFFFAC8D),
                       ),
                       foregroundColor: WidgetStateProperty.all<Color>(
                         Colors.brown,
