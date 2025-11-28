@@ -129,7 +129,7 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                       overflow: TextOverflow.ellipsis,
                     ),
                     SizedBox(
-                      height: listaProdutosTemporal.length * 40.0,
+                      height: listaProdutosTemporal.length * 22.0,
                       child: listaProdutosTemporal.isEmpty
                           ? const Center(
                               child: Text(
