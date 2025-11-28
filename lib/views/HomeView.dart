@@ -36,6 +36,8 @@ class _HomeWiewState extends State<HomeWiew> {
               ),
               child: Text(
                 "Lista de pedidos",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   color: Colors.brown,
                   fontWeight: FontWeight.bold,
@@ -57,6 +59,8 @@ class _HomeWiewState extends State<HomeWiew> {
                   flex: 1,
                   child: Text(
                     "Mesa",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.grey,
@@ -69,6 +73,8 @@ class _HomeWiewState extends State<HomeWiew> {
                   flex: 1,
                   child: Text(
                     "Nº productos",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.grey,
@@ -81,6 +87,8 @@ class _HomeWiewState extends State<HomeWiew> {
                   flex: 1,
                   child: Text(
                     "Total",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.grey,
@@ -119,6 +127,8 @@ class _HomeWiewState extends State<HomeWiew> {
                                   .getListaPedidos()[index]
                                   .mesaId
                                   .toString(),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 color: Color.fromARGB(255, 148, 189, 177),
                               ),
@@ -132,6 +142,8 @@ class _HomeWiewState extends State<HomeWiew> {
                                   .getListaPedidos()[index]
                                   .numProductos
                                   .toString(),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(color: Colors.grey),
                               textAlign: TextAlign.center,
                             ),
@@ -140,6 +152,8 @@ class _HomeWiewState extends State<HomeWiew> {
                             flex: 1,
                             child: Text(
                               "${barViewModel.getListaPedidos()[index].totalEuros.toStringAsFixed(2).toString()}€",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(color: Colors.brown),
                               textAlign: TextAlign.center,
                             ),
@@ -172,6 +186,7 @@ class _HomeWiewState extends State<HomeWiew> {
                     });
                   }
                 },
+
                 style: ButtonStyle(
                   backgroundColor: WidgetStateProperty.all<Color>(
                     Color(0xFFFFAC8D),
@@ -186,6 +201,8 @@ class _HomeWiewState extends State<HomeWiew> {
                     Flexible(
                       child: Text(
                         "Nuevo pedido",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),

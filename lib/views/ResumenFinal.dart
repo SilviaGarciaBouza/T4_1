@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:t4_1/models/Producto.dart';
-import 'package:t4_1/viewmodels/BarViewModel.dart';
 
 class ResumenfinalView extends StatelessWidget {
   static const routeName = '/resumenfinal';
@@ -47,6 +45,8 @@ class ResumenfinalView extends StatelessWidget {
               ),
               child: Text(
                 "Resumen de pedido",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   color: Colors.brown,
                   fontWeight: FontWeight.bold,
@@ -69,12 +69,19 @@ class ResumenfinalView extends StatelessWidget {
                 children: [
                   Text(
                     "Mesa:   ",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.brown,
                     ),
                   ),
-                  Text("$mesaId", style: TextStyle(color: Colors.brown)),
+                  Text(
+                    "$mesaId",
+                    style: TextStyle(color: Colors.brown),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ],
               ),
             ),
@@ -87,6 +94,8 @@ class ResumenfinalView extends StatelessWidget {
                     flex: 1,
                     child: Text(
                       "Cantidad",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.grey,
@@ -99,6 +108,8 @@ class ResumenfinalView extends StatelessWidget {
                     flex: 1,
                     child: Text(
                       "Producto",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.grey,
@@ -111,6 +122,8 @@ class ResumenfinalView extends StatelessWidget {
                     flex: 1,
                     child: Text(
                       "Pecio",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.grey,
@@ -140,9 +153,10 @@ class ResumenfinalView extends StatelessWidget {
                         child: Row(
                           children: [
                             Expanded(
-                              flex: 1,
                               child: Text(
                                 producto.cantidad.toString(),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   color: Color.fromARGB(255, 148, 189, 177),
                                 ),
@@ -150,18 +164,19 @@ class ResumenfinalView extends StatelessWidget {
                               ),
                             ),
                             Expanded(
-                              flex: 1,
                               child: Text(
                                 producto.name,
                                 style: TextStyle(color: Colors.grey),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.center,
                               ),
                             ),
                             Expanded(
-                              flex: 1,
                               child: Text(
                                 "${(producto.cantidad * producto.precio).toStringAsFixed(2)}€",
-
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                                 style: TextStyle(color: Colors.brown),
                                 textAlign: TextAlign.center,
                               ),
@@ -180,6 +195,8 @@ class ResumenfinalView extends StatelessWidget {
                 Expanded(
                   child: Text(
                     "Total: ${total.toStringAsFixed(2)}€",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(color: Colors.brown),
 
                     textAlign: TextAlign.center,
@@ -210,6 +227,8 @@ class ResumenfinalView extends StatelessWidget {
                         Flexible(
                           child: Text(
                             "Volver",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),

@@ -64,6 +64,8 @@ class _SeleccionproductoviewState extends State<Seleccionproductoview> {
               ),
               child: Text(
                 "Selección productos",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   color: Colors.brown,
                   fontWeight: FontWeight.bold,
@@ -87,6 +89,8 @@ class _SeleccionproductoviewState extends State<Seleccionproductoview> {
                     flex: 1,
                     child: Text(
                       "Cantidad",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.grey,
@@ -99,6 +103,8 @@ class _SeleccionproductoviewState extends State<Seleccionproductoview> {
                     flex: 1,
                     child: Text(
                       "Producto",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.grey,
@@ -111,6 +117,8 @@ class _SeleccionproductoviewState extends State<Seleccionproductoview> {
                     flex: 1,
                     child: Text(
                       "Precio",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.grey,
@@ -132,48 +140,59 @@ class _SeleccionproductoviewState extends State<Seleccionproductoview> {
                 itemCount: copiaLista.length,
                 itemBuilder: (context, index) {
                   var producto = copiaLista[index];
-                  return  Padding(
-              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-              child: 
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Center(
+                            child: DropdownButton<int>(
+                              value: producto.cantidad,
 
-                  Row(
-                    children: [
-                      
-                      Expanded(
-                        flex: 1,
-                        child: Center(
-                          child: DropdownButton<int>(
-                            value: producto.cantidad,
+                              onChanged: (int? nuevoValor) {
+                                setState(() {
+                                  copiaLista[index].cantidad = nuevoValor ?? 0;
+                                });
+                              },
 
-                            onChanged: (int? nuevoValor) {
-                              setState(() {
-                                copiaLista[index].cantidad = nuevoValor ?? 0;
-                              });
-                            },
-
-                            items: numeros.map<DropdownMenuItem<int>>((
-                              int numero,
-                            ) {
-                              return DropdownMenuItem<int>(
-                                value: numero,
-                                child: Text(numero.toString()),
-                              );
-                            }).toList(),
+                              items: numeros.map<DropdownMenuItem<int>>((
+                                int numero,
+                              ) {
+                                return DropdownMenuItem<int>(
+                                  value: numero,
+                                  child: Text(
+                                    numero.toString(),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                );
+                              }).toList(),
+                            ),
                           ),
                         ),
-                      ),
 
-                      Expanded(
-                        flex: 1,
-                        child:  Text(producto.name, textAlign: TextAlign.center,),
-                        
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Text("${producto.precio.toString()}€", textAlign: TextAlign.center,),
-                      ),
-                    ],
-                  ));
+                        Expanded(
+                          flex: 1,
+                          child: Text(
+                            producto.name,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Text(
+                            "${producto.precio.toString()}€",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
                 },
               ),
             ),
@@ -204,6 +223,8 @@ class _SeleccionproductoviewState extends State<Seleccionproductoview> {
                           Flexible(
                             child: Text(
                               "Confirmar",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ),
@@ -229,6 +250,8 @@ class _SeleccionproductoviewState extends State<Seleccionproductoview> {
                           Flexible(
                             child: Text(
                               "Cancelar",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ),

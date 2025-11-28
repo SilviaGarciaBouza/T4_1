@@ -65,6 +65,8 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
               ),
               child: const Text(
                 "Crea un nuevo pedido",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   color: Colors.brown,
                   fontWeight: FontWeight.bold,
@@ -86,6 +88,7 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   labelText: 'Introduce el Nº de Mesa',
+
                   hintStyle: const TextStyle(color: Colors.grey),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12.0),
@@ -108,7 +111,6 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
             ),
 
             Card(
-              
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
@@ -116,13 +118,15 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                   children: [
                     Text(
                       "Mesa: ${parsedMesaId > 0 ? parsedMesaId : ' sin mesa'}",
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 8),
                     const Text(
                       "Productos:",
-                     
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     SizedBox(
                       height: listaProdutosTemporal.length * 40.0,
@@ -130,6 +134,8 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                           ? const Center(
                               child: Text(
                                 "No hay productos seleccionados.",
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                                 style: TextStyle(color: Colors.grey),
                               ),
                             )
@@ -140,20 +146,27 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                                 final producto = listaProdutosTemporal[index];
                                 return Row(
                                   children: [
-                                  
-                                   Text(
-                                      "${producto.cantidad} x ${producto.name} "),
-                                  Text(
-                                      "${(producto.precio * producto.cantidad).toStringAsFixed(2)} €"),
-                   ] );
+                                    Text(
+                                      "${producto.cantidad} x ${producto.name} ",
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    Text(
+                                      "${(producto.precio * producto.cantidad).toStringAsFixed(2)} €",
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
+                                );
                               },
                             ),
                     ),
                     const Divider(),
                     Text(
                       "Total: ${listaProdutosTemporal.map((e) => e.precio * e.cantidad).fold(0.0, (a, b) => a + b).toStringAsFixed(2)} €",
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -181,19 +194,23 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                   }
                 },
                 style: ButtonStyle(
-                  backgroundColor:
-                      WidgetStateProperty.all<Color>(const Color(0xFFFFAC8D)),
-                  foregroundColor:
-                      WidgetStateProperty.all<Color>(Colors.brown),
+                  backgroundColor: WidgetStateProperty.all<Color>(
+                    const Color(0xFFFFAC8D),
+                  ),
+                  foregroundColor: WidgetStateProperty.all<Color>(Colors.brown),
                 ),
                 child: const Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(Icons.coffee),
                     SizedBox(width: 8),
-                    Text(
-                      "Añadir productos",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                    Flexible(
+                      child: Text(
+                        "Añadir productos",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ],
                 ),
@@ -206,11 +223,10 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
             ),
             const SizedBox(height: 16),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Flexible(
-                  child: ElevatedButton(
+            Center(
+              child: Column(
+                children: [
+                  ElevatedButton(
                     onPressed: () {
                       if (parsedMesaId <= 0 ||
                           listaProdutosTemporal.isEmpty ||
@@ -222,6 +238,8 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                           const SnackBar(
                             content: Text(
                               "Introduce un id de mesa y  productos válidos y que la mesa no  esté ocupada",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         );
@@ -240,53 +258,57 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                         ),
                         totalEuros: totalCalculado,
                       );
-                     // barViewModel.addPedido(pedidoCompleto);
+                      // barViewModel.addPedido(pedidoCompleto);
                       Navigator.pop(context, pedidoCompleto);
                     },
                     style: ButtonStyle(
                       backgroundColor: WidgetStateProperty.all<Color>(
                         const Color.fromARGB(255, 148, 189, 177),
                       ),
-                      foregroundColor:
-                          WidgetStateProperty.all<Color>(Colors.brown),
+                      foregroundColor: WidgetStateProperty.all<Color>(
+                        Colors.brown,
+                      ),
                     ),
                     child: const Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text("Guardar",
-                            style: TextStyle(fontWeight: FontWeight.bold)),
+                        Text(
+                          "Guardar pedido",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                       ],
                     ),
                   ),
-                ),
 
-                const SizedBox(width: 8),
-
-               
-                Flexible(
-                  child: ElevatedButton(
+                  const SizedBox(height: 8),
+                  ElevatedButton(
                     onPressed: () => Navigator.pop(context),
                     style: ButtonStyle(
-                      backgroundColor:
-                          WidgetStateProperty.all<Color>(const Color(0xFFFFAC8D)),
-                      foregroundColor:
-                          WidgetStateProperty.all<Color>(Colors.white),
+                      backgroundColor: WidgetStateProperty.all<Color>(
+                        const Color(0xFFFFAC8D),
+                      ),
+                      foregroundColor: WidgetStateProperty.all<Color>(
+                        Colors.white,
+                      ),
                     ),
                     child: const Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text("Cancelar",
-                            style: TextStyle(fontWeight: FontWeight.bold)),
+                        Text(
+                          "Cancelar",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                       ],
                     ),
                   ),
-                ),
 
-                const SizedBox(width: 8),
+                  const SizedBox(height: 8),
 
-              
-                Flexible(
-                  child: ElevatedButton(
+                  ElevatedButton(
                     onPressed: () {
                       final currentMesaId =
                           int.tryParse(controlador.text) ?? -1;
@@ -294,7 +316,11 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                       if (currentMesaId <= 0) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                            content: Text("Introduce un id de mesa válido"),
+                            content: Text(
+                              "Introduce un id de mesa válido",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         );
                         return;
@@ -302,7 +328,11 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                       if (listaProdutosTemporal.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                            content: Text("Añadir algún producto."),
+                            content: Text(
+                              "Añadir algún producto.",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         );
                         return;
@@ -318,21 +348,27 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                       );
                     },
                     style: ButtonStyle(
-                      backgroundColor:
-                          WidgetStateProperty.all<Color>(const Color(0xFFFFAC8D)),
-                      foregroundColor:
-                          WidgetStateProperty.all<Color>(Colors.brown),
+                      backgroundColor: WidgetStateProperty.all<Color>(
+                        const Color(0xFFFFAC8D),
+                      ),
+                      foregroundColor: WidgetStateProperty.all<Color>(
+                        Colors.brown,
+                      ),
                     ),
                     child: const Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text("Resumen",
-                            style: TextStyle(fontWeight: FontWeight.bold)),
+                        Text(
+                          "Ver resumen",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                       ],
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
