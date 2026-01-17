@@ -1,12 +1,15 @@
 import 'Pedido.dart';
 import 'Producto.dart';
 
+/// Lógica de negocio y persistencia temporal de los datos del bar.
 class BarModel {
   List<Pedido> listaPedidos = [
     Pedido(mesaId: 1, numProductos: 5, totalEuros: 23.4),
     Pedido(mesaId: 2, numProductos: 4, totalEuros: 20.5),
   ];
 
+  /// Busca un pedido específico por el ID de la mesa.
+  /// Retorna null si no se encuentra (maneja los errores mediante try-catch).
   Pedido? getPedido(int mesaId) {
     try {
       return listaPedidos.firstWhere((pedido) => pedido.mesaId == mesaId);
@@ -15,10 +18,13 @@ class BarModel {
     }
   }
 
+  /// Añade un nuevo pedido a la lista.
   void addPedido(Pedido p) {
     listaPedidos.add(p);
   }
 
+  /// Método de cálculo: Procesa una lista de productos y genera un objeto [Pedido].
+  /// Calcula el total de euros y el conteo de artículos sumando cantidad * precio.
   Pedido crearPedido(int idMesa, List<Producto> listaProductos) {
     double totalEuros = 0;
     int numeroProductosTotal = 0;
@@ -33,6 +39,7 @@ class BarModel {
     );
   }
 
+  /// Catálogo de productos disponibles en el bar.
   List<Producto> listaProductos = [
     Producto(name: "Cafe", precio: 1.5),
     Producto(name: "Descafeinado", precio: 2.3),

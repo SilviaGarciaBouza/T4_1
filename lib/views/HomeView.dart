@@ -4,6 +4,7 @@ import 'package:t4_1/viewmodels/BarViewModel.dart';
 import 'package:t4_1/views/CrearPedidoView.dart';
 import 'package:provider/provider.dart';
 
+/// Pantalla principal que muestra el listado de todas las mesas con pedidos activos.
 class HomeWiew extends StatefulWidget {
   static const routeName = '/';
   const HomeWiew({super.key});
@@ -172,6 +173,8 @@ class _HomeWiewState extends State<HomeWiew> {
             child: Center(
               child: ElevatedButton(
                 onPressed: () async {
+                  // Dentro del build del botón "Nuevo pedido":
+                  // Se usa Navigator.push esperando un resultado (Pop) del tipo Pedido.
                   final resultado = await Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -179,7 +182,7 @@ class _HomeWiewState extends State<HomeWiew> {
                     ),
                   );
                   if (!mounted) return;
-
+                  // Si recibimos un Pedido válido, actualizamos el ViewModel.
                   if (resultado != null && resultado is Pedido && mounted) {
                     setState(() {
                       barViewModel.addPedido(resultado);

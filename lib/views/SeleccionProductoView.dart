@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:t4_1/models/Producto.dart';
 import 'package:t4_1/viewmodels/BarViewModel.dart';
 
+// Vista para seleccionar cantidades de productos.
+/// Utiliza una copia local para no modificar el catálogo global hasta confirmar.
 class Seleccionproductoview extends StatefulWidget {
   static const routeName = '/seleccionarproductos';
   const Seleccionproductoview({
@@ -23,7 +25,9 @@ class _SeleccionproductoviewState extends State<Seleccionproductoview> {
   @override
   Widget build(BuildContext context) {
     final barViewModel = Provider.of<BarViewModel>(context);
-
+    // En el build:
+    // Inicializamos una 'copiaLista' solo la primera vez para permitir 'Cancelar'
+    // sin guardar cambios accidentales en el estado global.
     if (!initialized) {
       final listaBase = barViewModel.getListaProductos();
 
