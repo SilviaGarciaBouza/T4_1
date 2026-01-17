@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="t4_1 API docs, for the Dart programming language.">
+  <title>t4_1 - Dart API docs</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="static-assets/github.css?v1">
+  <link rel="stylesheet" href="static-assets/styles.css?v1">
+  <link rel="icon" href="static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li class="self-crumb">t4_1 package</li>
+  </ol>
+  <div class="self-name">t4_1</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+  <div id="dartdoc-main-content" class="main-content">
+      
+<section class="desc markdown">
+  <h1 id="t4_1---bar-order-app">T4_1 - Bar Order App</h1>
+<p>Este proyecto consiste en una aplicación multiplataforma para gestionar los pedidos de un bar, creada con Flutter. Permite anotar qué pide cada mesa, ver el total y organizar las comandas de forma rápida.</p>
+<h2 id="caractersticas">Características</h2>
+<ul>
+<li><strong>Lista de pedidos</strong>: Ves todas las mesas que están atendiendo, cuántos productos llevan y el total a pagar.</li>
+<li><strong>Tomar nota</strong>: Puedes: crear un nuevo pedido escribiendo el número de mesa.</li>
+<li><strong>Elegir productos</strong>: Tienes una lista con cafés, zumos, tés, etc., para ir sumando al pedido.</li>
+<li><strong>Resumen</strong>: Antes de cerrar, puedes ver un desglose de lo que se ha pedido.</li>
+</ul>
+<h2 id="tecnologa">Tecnología</h2>
+<ul>
+<li><strong>Arquitectura:</strong> MVVM (Model-View-ViewModel).</li>
+<li><strong>Lenguaje:</strong> Dart.</li>
+<li><strong>Framework:</strong> Flutter.</li>
+</ul>
+<h2 id="flujo-de-navegacin">Flujo de Navegación</h2>
+<p>El proyecto utiliza dos tipos de navegación:</p>
+<ul>
+<li>Navegación <strong>Imperativa</strong> (<code>Navigator.push</code>).</li>
+<li>Navegación con <strong>Ruta con Nombre</strong> (<code>Navigator.pushNamed</code>).</li>
+</ul>
+<h2 id="cmo-usarla">Cómo usarla</h2>
+<ol>
+<li>Abre la terminal en la carpeta principal.</li>
+<li>Ejecuta <code>flutter pub get</code>.</li>
+<li>Ejecuta <code>flutter run</code>.</li>
+</ol>
+<h2 id="capturas-de-pantalla">Capturas de pantalla</h2>
+<table>
+<thead>
+<tr>
+<th align="center">Lista</th>
+<th align="center">Productos</th>
+<th align="center">Resumen</th>
+<th align="center">Nuevo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><img src="https://github.com/user-attachments/assets/14167946-e1ab-4b6d-976a-b3453dea75d0" width="160"></td>
+<td align="center"><img src="https://github.com/user-attachments/assets/19cb74d0-35bf-41cc-ba0b-cb56db09a7d1" width="160"></td>
+<td align="center"><img src="https://github.com/user-attachments/assets/5ef9dde1-9887-4b00-aced-1a0009ccf80e" width="160"></td>
+<td align="center"><img src="https://github.com/user-attachments/assets/4ed7418a-1464-430a-a3e1-f196a400aa01" width="160"></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+
+      <section class="summary">
+          <h2>Libraries</h2>
+        <dl>
+          <dt id="main">
+  <span class="name"><a href="main/">main</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="BarModel">
+  <span class="name"><a href="models_BarModel/">models/BarModel</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="Pedido">
+  <span class="name"><a href="models_Pedido/">models/Pedido</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="Producto">
+  <span class="name"><a href="models_Producto/">models/Producto</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="BarViewModel">
+  <span class="name"><a href="viewmodels_BarViewModel/">viewmodels/BarViewModel</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="CrearPedidoView">
+  <span class="name"><a href="views_CrearPedidoView/">views/CrearPedidoView</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="HomeView">
+  <span class="name"><a href="views_HomeView/">views/HomeView</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="ResumenFinal">
+  <span class="name"><a href="views_ResumenFinal/">views/ResumenFinal</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="SeleccionProductoView">
+  <span class="name"><a href="views_SeleccionProductoView/">views/SeleccionProductoView</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+        </dl>
+      </section>
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li class="self-crumb">t4_1 package</li>
+</ol>
+
+    <h5 class="hidden-xs"><span class="package-name">t4_1</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Libraries</li>
+      <li><a href="main/">main</a></li>
+      <li><a href="models_BarModel/">models/BarModel</a></li>
+      <li><a href="models_Pedido/">models/Pedido</a></li>
+      <li><a href="models_Producto/">models/Producto</a></li>
+      <li><a href="viewmodels_BarViewModel/">viewmodels/BarViewModel</a></li>
+      <li><a href="views_CrearPedidoView/">views/CrearPedidoView</a></li>
+      <li><a href="views_HomeView/">views/HomeView</a></li>
+      <li><a href="views_ResumenFinal/">views/ResumenFinal</a></li>
+      <li><a href="views_SeleccionProductoView/">views/SeleccionProductoView</a></li>
+</ol>
+
+  </div>
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div>
+</main>
+<footer>
+  <span class="no-break">
+    t4_1
+      1.0.0+1
+  </span>
+  
+</footer>
+
+
+<script src="static-assets/highlight.pack.js?v1"></script>
+<script src="static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+
