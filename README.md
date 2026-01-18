@@ -31,8 +31,10 @@ El proyecto utiliza dos tipos de navegación:
 
 ## Capturas de pantalla
 
-| Lista | Productos | Resumen | Nuevo |
+| Lista de Pedidos| Crear Pedido | Resumen | Nuevo |
 | :---: | :---: | :---: | :---: |
-| <img src="https://github.com/user-attachments/assets/14167946-e1ab-4b6d-976a-b3453dea75d0" width="160"> | <img src="https://github.com/user-attachments/assets/19cb74d0-35bf-41cc-ba0b-cb56db09a7d1" width="160"> | <img src="https://github.com/user-attachments/assets/5ef9dde1-9887-4b00-aced-1a0009ccf80e" width="160"> | <img src="https://github.com/user-attachments/assets/4ed7418a-1464-430a-a3e1-f196a400aa01" width="160"> |
+| <img src="https://github.com/user-attachments/assets/14167946-e1ab-4b6d-976a-b3453dea75d0" width="160"> | 
+<img src="<img width="790" height="1661" alt="image" src="https://github.com/user-attachments/assets/6e69590f-9496-4f66-8e65-ac6fee4dfe94" />
+ width="160"> | <img src="https://github.com/user-attachments/assets/5ef9dde1-9887-4b00-aced-1a0009ccf80e" width="160"> | <img src="https://github.com/user-attachments/assets/4ed7418a-1464-430a-a3e1-f196a400aa01" width="160"> |
 
 
