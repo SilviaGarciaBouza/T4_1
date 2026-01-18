@@ -6,6 +6,7 @@ import 'package:t4_1/models/Producto.dart';
 import 'package:t4_1/models/Pedido.dart';
 import 'package:t4_1/views/SeleccionProductoView.dart';
 
+/// Pantalla para crear un nuevo [Pedido] seleccionando mesa y productos.
 class Crearpedidoview extends StatefulWidget {
   static const routeName = '/crearpedido';
   const Crearpedidoview({super.key});
@@ -15,23 +16,30 @@ class Crearpedidoview extends StatefulWidget {
 }
 
 class _CrearpedidoviewState extends State<Crearpedidoview> {
+  /// Controlador para leer el número de mesa del teclado.
   final TextEditingController controlador = TextEditingController();
+
+  /// Lista temporal para ir guardando los productos elegidos.
   List<Producto> listaProdutosTemporal = [];
+
+  /// Variable para guardar el número de la mesa.
   int parsedMesaId = -1;
 
   @override
   void initState() {
     super.initState();
+
+    /// Escucha lo que se escribe para actualizar el id de la mesa.
     controlador.addListener(actualizacionMesaId);
   }
 
   @override
   void dispose() {
-    controlador.removeListener(actualizacionMesaId);
     controlador.dispose();
     super.dispose();
   }
 
+  /// Convierte el texto escrito a un número entero que indica el número de la mesa.
   void actualizacionMesaId() {
     final mesaIdText = controlador.text;
     final newMesaId = int.tryParse(mesaIdText) ?? -1;
@@ -56,17 +64,10 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(24.0),
             ),
-            child: Padding(
-              padding: const EdgeInsets.only(
-                top: 8.0,
-                bottom: 8.0,
-                left: 32.0,
-                right: 32.0,
-              ),
-              child: const Text(
+            child: const Padding(
+              padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
+              child: Text(
                 "Crea un nuevo pedido",
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   color: Colors.brown,
                   fontWeight: FontWeight.bold,
@@ -81,6 +82,7 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+            /// Campo de texto para introducir el número de mesa.
             Padding(
               padding: const EdgeInsets.only(bottom: 16.0),
               child: TextField(
@@ -88,8 +90,8 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   labelText: 'Introduce el Nº de Mesa',
-
-                  hintStyle: const TextStyle(color: Colors.grey),
+                  filled: true,
+                  fillColor: Colors.white,
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12.0),
                     borderSide: const BorderSide(
@@ -97,19 +99,11 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                       width: 2,
                     ),
                   ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                    borderSide: const BorderSide(
-                      color: Color(0xFFFFAC8D),
-                      width: 3,
-                    ),
-                  ),
-                  filled: true,
-                  fillColor: Colors.white,
                 ),
               ),
             ),
 
+            /// Tarjeta que muestra el resumen actual de la mesa y el total.
             Card(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -118,45 +112,25 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                   children: [
                     Text(
                       "Mesa: ${parsedMesaId > 0 ? parsedMesaId : ' sin mesa'}",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 8),
-                    const Text(
-                      "Productos:",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                    const Text("Productos:"),
                     SizedBox(
                       height: listaProdutosTemporal.length * 22.0,
                       child: listaProdutosTemporal.isEmpty
                           ? const Center(
                               child: Text(
                                 "No hay productos seleccionados.",
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
                                 style: TextStyle(color: Colors.grey),
                               ),
                             )
                           : ListView.builder(
-                              shrinkWrap: true,
                               itemCount: listaProdutosTemporal.length,
                               itemBuilder: (context, index) {
                                 final producto = listaProdutosTemporal[index];
-                                return Row(
-                                  children: [
-                                    Text(
-                                      "${producto.cantidad} x ${producto.name} ",
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    Text(
-                                      "${(producto.precio * producto.cantidad).toStringAsFixed(2)} €",
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ],
+                                return Text(
+                                  "${producto.cantidad} x ${producto.name} - ${(producto.precio * producto.cantidad).toStringAsFixed(2)} €",
                                 );
                               },
                             ),
@@ -164,8 +138,6 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                     const Divider(),
                     Text(
                       "Total: ${listaProdutosTemporal.map((e) => e.precio * e.cantidad).fold(0.0, (a, b) => a + b).toStringAsFixed(2)} €",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],
@@ -175,200 +147,75 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
 
             const SizedBox(height: 20),
 
-            Center(
-              child: ElevatedButton(
-                onPressed: () async {
-                  final resultado = await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Seleccionproductoview(
-                        productosSeleccionadosAnteriores: listaProdutosTemporal,
-                      ),
+            /// Botón para ir a la pantalla de elegir productos.
+            ElevatedButton(
+              onPressed: () async {
+                final resultado = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Seleccionproductoview(
+                      productosSeleccionadosAnteriores: listaProdutosTemporal,
                     ),
-                  );
-                  if (!mounted) return;
-                  if (resultado != null && resultado is List<Producto>) {
-                    setState(() {
-                      listaProdutosTemporal = resultado;
-                    });
-                  }
-                },
-                style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all<Color>(
-                    const Color(0xFFFFAC8D),
                   ),
-                  foregroundColor: WidgetStateProperty.all<Color>(Colors.brown),
-                ),
-                child: const Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.coffee),
-                    SizedBox(width: 8),
-                    Flexible(
-                      child: Text(
-                        "Añadir productos",
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+                );
+                if (!mounted) return;
+                if (resultado != null && resultado is List<Producto>) {
+                  setState(() {
+                    listaProdutosTemporal = resultado;
+                  });
+                }
+              },
+              child: const Text("Añadir productos"),
             ),
 
-            const Padding(
-              padding: EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
-              child: Divider(color: Colors.purpleAccent, height: 1),
-            ),
             const SizedBox(height: 16),
 
-            Center(
-              child: Column(
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      if (parsedMesaId <= 0 ||
-                          listaProdutosTemporal.isEmpty ||
-                          barViewModel
-                              .getListaPedidos()
-                              .map((e) => e.mesaId)
-                              .contains(parsedMesaId)) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                              "Introduce un id de mesa y  productos válidos y que la mesa no  esté ocupada",
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        );
-                        return;
-                      }
+            /// Botón para confirmar y guardar el pedido final.
+            ElevatedButton(
+              onPressed: () {
+                if (parsedMesaId <= 0 ||
+                    listaProdutosTemporal.isEmpty ||
+                    barViewModel
+                        .getListaPedidos()
+                        .map((e) => e.mesaId)
+                        .contains(parsedMesaId)) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Datos inválidos o mesa ocupada"),
+                    ),
+                  );
+                  return;
+                }
+                final pedidoCompleto = Pedido(
+                  mesaId: parsedMesaId,
+                  numProductos: listaProdutosTemporal.fold(
+                    0,
+                    (sum, p) => sum + p.cantidad,
+                  ),
+                  totalEuros: listaProdutosTemporal
+                      .map((e) => e.precio * e.cantidad)
+                      .fold(0.0, (a, b) => a + b),
+                );
+                Navigator.pop(context, pedidoCompleto);
+              },
+              child: const Text("Guardar pedido"),
+            ),
 
-                      final double totalCalculado = listaProdutosTemporal
-                          .map((e) => e.precio * e.cantidad)
-                          .fold(0.0, (a, b) => a + b);
-
-                      final Pedido pedidoCompleto = Pedido(
-                        mesaId: parsedMesaId,
-                        numProductos: listaProdutosTemporal.fold(
-                          0,
-                          (sum, p) => sum + p.cantidad,
-                        ),
-                        totalEuros: totalCalculado,
-                      );
-                      // barViewModel.addPedido(pedidoCompleto);
-                      Navigator.pop(context, pedidoCompleto);
+            /// Botón para ver el resumen del pedido.
+            ElevatedButton(
+              onPressed: () {
+                if (parsedMesaId > 0 && listaProdutosTemporal.isNotEmpty) {
+                  Navigator.pushNamed(
+                    context,
+                    ResumenfinalView.routeName,
+                    arguments: {
+                      "productos": listaProdutosTemporal,
+                      "mesaId": parsedMesaId,
                     },
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStateProperty.all<Color>(
-                        const Color.fromARGB(255, 148, 189, 177),
-                      ),
-                      foregroundColor: WidgetStateProperty.all<Color>(
-                        Colors.brown,
-                      ),
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          "Guardar pedido",
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  const SizedBox(height: 8),
-                  ElevatedButton(
-                    onPressed: () => Navigator.pop(context),
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStateProperty.all<Color>(
-                        const Color(0xFFFFAC8D),
-                      ),
-                      foregroundColor: WidgetStateProperty.all<Color>(
-                        Colors.white,
-                      ),
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          "Cancelar",
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  const SizedBox(height: 8),
-
-                  ElevatedButton(
-                    onPressed: () {
-                      final currentMesaId =
-                          int.tryParse(controlador.text) ?? -1;
-
-                      if (currentMesaId <= 0) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                              "Introduce un id de mesa válido",
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        );
-                        return;
-                      }
-                      if (listaProdutosTemporal.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                              "Añadir algún producto.",
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        );
-                        return;
-                      }
-
-                      Navigator.pushNamed(
-                        context,
-                        ResumenfinalView.routeName,
-                        arguments: {
-                          "productos": listaProdutosTemporal,
-                          "mesaId": currentMesaId,
-                        },
-                      );
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStateProperty.all<Color>(
-                        const Color(0xFFFFAC8D),
-                      ),
-                      foregroundColor: WidgetStateProperty.all<Color>(
-                        Colors.brown,
-                      ),
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          "Ver resumen",
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                  );
+                }
+              },
+              child: const Text("Ver resumen"),
             ),
           ],
         ),

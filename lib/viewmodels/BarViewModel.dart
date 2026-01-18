@@ -4,33 +4,34 @@ import 'package:t4_1/models/Producto.dart';
 import '../models/BarModel.dart';
 import '../models/Pedido.dart';
 
-/// Intermediario entre la Vista y el Modelo.
-/// Utiliza [ChangeNotifier] para notificar a la UI cuando los datos cambian.
+/// Clase que actúa como intermediaria entre las vistas y los modelos.
+/// Utiliza [ChangeNotifier] para avisar a la UI de los cambios de los datos.
 class BarViewModel extends ChangeNotifier {
-  /// Instancia del modelo de datos.
+  /// Instancia del modelo [BarModel].
   BarModel barModel = BarModel();
 
-  /// Obtiene los pedidos actuales para mostrarlos en la Home.
+  /// Método que obtiene la lista de pedidos.
   List<Pedido> getListaPedidos() {
     return barModel.listaPedidos;
   }
 
-  /// Agrega un pedido y dispara [notifyListeners] para refrescar la lista en pantalla.
-
+  /// Método que añade un [Pedido] y avisa con [notifyListeners] para que se actualice la vista.
   void addPedido(Pedido p) {
     barModel.addPedido(p);
     notifyListeners();
   }
 
-  /// Expone la funcionalidad de creación de pedidos del modelo.
+  /// Método que crea un nuevo [Pedido].
   Pedido crearPedido(int idMesa, List<Producto> listaProductos) {
     return barModel.crearPedido(idMesa, listaProductos);
   }
 
+  /// Método que devuelve una lista de productos.
   List<Producto> getListaProductos() {
     return barModel.listaProductos;
   }
 
+  /// Método que añade un [Producto] y lo notifica a la vista mediante [notifyListeners].
   void addProducto(Producto p) {
     barModel.addProducto(p);
     notifyListeners();

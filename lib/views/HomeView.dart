@@ -16,12 +16,13 @@ class HomeWiew extends StatefulWidget {
 class _HomeWiewState extends State<HomeWiew> {
   @override
   Widget build(BuildContext context) {
+    /// Obtenemos el [barViewModel] para acceder a la lista de pedidos.
     final barViewModel = Provider.of<BarViewModel>(context);
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 249, 239, 223),
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 249, 239, 223),
-
         title: Center(
           child: Card(
             color: const Color.fromARGB(255, 148, 189, 177),
@@ -29,16 +30,12 @@ class _HomeWiewState extends State<HomeWiew> {
               borderRadius: BorderRadius.circular(24.0),
             ),
             child: Padding(
-              padding: EdgeInsets.only(
-                top: 8.0,
-                bottom: 8.0,
-                left: 32.0,
-                right: 32.0,
+              padding: const EdgeInsets.symmetric(
+                vertical: 8.0,
+                horizontal: 32.0,
               ),
-              child: Text(
+              child: const Text(
                 "Lista de pedidos",
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   color: Colors.brown,
                   fontWeight: FontWeight.bold,
@@ -52,111 +49,92 @@ class _HomeWiewState extends State<HomeWiew> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          /// Cabecera de la tabla con los títulos de las columnas.
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Row(
-              children: [
+              children: const [
                 Expanded(
                   flex: 1,
                   child: Text(
                     "Mesa",
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.grey,
-                      fontSize: 14,
                     ),
-                    textAlign: TextAlign.center,
                   ),
                 ),
                 Expanded(
                   flex: 1,
                   child: Text(
                     "Nº productos",
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.grey,
-                      fontSize: 14,
                     ),
-                    textAlign: TextAlign.center,
                   ),
                 ),
                 Expanded(
                   flex: 1,
                   child: Text(
                     "Total",
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.grey,
-                      fontSize: 14,
                     ),
-                    textAlign: TextAlign.center,
                   ),
                 ),
               ],
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(left: 16.0, right: 16.0),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
             child: Divider(color: Colors.purpleAccent, height: 1),
           ),
+
+          /// Lista que muestra cada [Pedido] del [BarViewModel].
           Expanded(
             child: ListView.builder(
               itemCount: barViewModel.getListaPedidos().length,
               itemBuilder: (context, index) {
+                final pedido = barViewModel.getListaPedidos()[index];
                 return Padding(
-                  padding: const EdgeInsets.only(
-                    top: 4.0,
-                    bottom: 4.0,
-                    left: 16.0,
-                    right: 16.0,
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 4.0,
+                    horizontal: 16.0,
                   ),
                   child: Card(
                     child: Padding(
-                      padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: Row(
                         children: [
                           Expanded(
                             flex: 1,
                             child: Text(
-                              barViewModel
-                                  .getListaPedidos()[index]
-                                  .mesaId
-                                  .toString(),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
+                              pedido.mesaId.toString(),
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
                                 color: Color.fromARGB(255, 148, 189, 177),
                               ),
-                              textAlign: TextAlign.center,
                             ),
                           ),
                           Expanded(
                             flex: 1,
                             child: Text(
-                              barViewModel
-                                  .getListaPedidos()[index]
-                                  .numProductos
-                                  .toString(),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(color: Colors.grey),
+                              pedido.numProductos.toString(),
                               textAlign: TextAlign.center,
+                              style: const TextStyle(color: Colors.grey),
                             ),
                           ),
                           Expanded(
                             flex: 1,
                             child: Text(
-                              "${barViewModel.getListaPedidos()[index].totalEuros.toStringAsFixed(2).toString()}€",
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(color: Colors.brown),
+                              "${pedido.totalEuros.toStringAsFixed(2)}€",
                               textAlign: TextAlign.center,
+                              style: const TextStyle(color: Colors.brown),
                             ),
                           ),
                         ],
@@ -173,41 +151,37 @@ class _HomeWiewState extends State<HomeWiew> {
             child: Center(
               child: ElevatedButton(
                 onPressed: () async {
-                  // Dentro del build del botón "Nuevo pedido":
-                  // Se usa Navigator.push esperando un resultado (Pop) del tipo Pedido.
+                  /// Navega a [Crearpedidoview] y espera recibir un objeto [Pedido].
                   final resultado = await Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const Crearpedidoview(),
                     ),
                   );
+
                   if (!mounted) return;
-                  // Si recibimos un Pedido válido, actualizamos el ViewModel.
-                  if (resultado != null && resultado is Pedido && mounted) {
+
+                  /// Si el resultado es un [Pedido] válido, se añade al modelo y se actualiza la vista.
+                  if (resultado != null && resultado is Pedido) {
                     setState(() {
                       barViewModel.addPedido(resultado);
                     });
                   }
                 },
-
                 style: ButtonStyle(
                   backgroundColor: WidgetStateProperty.all<Color>(
-                    Color(0xFFFFAC8D),
+                    const Color(0xFFFFAC8D),
                   ),
                   foregroundColor: WidgetStateProperty.all<Color>(Colors.brown),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Flexible(child: Icon(Icons.coffee)),
+                  children: const [
+                    Icon(Icons.coffee),
                     SizedBox(width: 8),
-                    Flexible(
-                      child: Text(
-                        "Nuevo pedido",
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
+                    Text(
+                      "Nuevo pedido",
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),

@@ -1,4 +1,4 @@
-/// Representa un artículo del catálogo del bar.
+/// Clase que representa un artículo del catálogo del bar.
 class Producto {
   Producto({
     required this.name,

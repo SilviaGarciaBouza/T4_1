@@ -1,4 +1,4 @@
-/// Representa la información de una comanda.
+/// Clase que representa la información de una comanda.
 class Pedido {
   Pedido({
     required this.mesaId,
