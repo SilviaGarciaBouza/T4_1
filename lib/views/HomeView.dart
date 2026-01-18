@@ -165,6 +165,13 @@ class _HomeWiewState extends State<HomeWiew> {
                   if (resultado != null && resultado is Pedido) {
                     setState(() {
                       barViewModel.addPedido(resultado);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            "Pedido de la mesa ${resultado.mesaId} guardado con éxito",
+                          ),
+                        ),
+                      );
                     });
                   }
                 },
@@ -174,16 +181,17 @@ class _HomeWiewState extends State<HomeWiew> {
                   ),
                   foregroundColor: WidgetStateProperty.all<Color>(Colors.brown),
                 ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: const [
-                    Icon(Icons.coffee),
-                    SizedBox(width: 8),
-                    Text(
-                      "Nuevo pedido",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ],
+
+                child: Tooltip(
+                  message: "Pulsa para abrir el formulario de nuevo pedido",
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.coffee),
+                      SizedBox(width: 8),
+                      Text("Nuevo pedido"),
+                    ],
+                  ),
                 ),
               ),
             ),

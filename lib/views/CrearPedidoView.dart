@@ -89,7 +89,10 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
                 controller: controlador,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  labelText: 'Introduce el Nº de Mesa',
+                  labelText: 'Nº de Mesa',
+                  hintText: 'Ej: 1',
+                  helperText:
+                      'Introduce el número de mesa, que debe ser mayor de 0',
                   filled: true,
                   fillColor: Colors.white,
                   enabledBorder: OutlineInputBorder(
@@ -147,75 +150,89 @@ class _CrearpedidoviewState extends State<Crearpedidoview> {
 
             const SizedBox(height: 20),
 
-            /// Botón para ir a la pantalla de elegir productos.
-            ElevatedButton(
-              onPressed: () async {
-                final resultado = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Seleccionproductoview(
-                      productosSeleccionadosAnteriores: listaProdutosTemporal,
-                    ),
+            Tooltip(
+              message: 'Añade productos al pedido',
+              child:
+                  /// Botón para ir a la pantalla de elegir productos.
+                  ElevatedButton(
+                    onPressed: () async {
+                      final resultado = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Seleccionproductoview(
+                            productosSeleccionadosAnteriores:
+                                listaProdutosTemporal,
+                          ),
+                        ),
+                      );
+                      if (!mounted) return;
+                      if (resultado != null && resultado is List<Producto>) {
+                        setState(() {
+                          listaProdutosTemporal = resultado;
+                        });
+                      }
+                    },
+
+                    child: const Text("Añadir productos"),
                   ),
-                );
-                if (!mounted) return;
-                if (resultado != null && resultado is List<Producto>) {
-                  setState(() {
-                    listaProdutosTemporal = resultado;
-                  });
-                }
-              },
-              child: const Text("Añadir productos"),
             ),
 
             const SizedBox(height: 16),
-
-            /// Botón para confirmar y guardar el pedido final.
-            ElevatedButton(
-              onPressed: () {
-                if (parsedMesaId <= 0 ||
-                    listaProdutosTemporal.isEmpty ||
-                    barViewModel
-                        .getListaPedidos()
-                        .map((e) => e.mesaId)
-                        .contains(parsedMesaId)) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("Datos inválidos o mesa ocupada"),
-                    ),
-                  );
-                  return;
-                }
-                final pedidoCompleto = Pedido(
-                  mesaId: parsedMesaId,
-                  numProductos: listaProdutosTemporal.fold(
-                    0,
-                    (sum, p) => sum + p.cantidad,
-                  ),
-                  totalEuros: listaProdutosTemporal
-                      .map((e) => e.precio * e.cantidad)
-                      .fold(0.0, (a, b) => a + b),
-                );
-                Navigator.pop(context, pedidoCompleto);
-              },
-              child: const Text("Guardar pedido"),
-            ),
-
-            /// Botón para ver el resumen del pedido.
-            ElevatedButton(
-              onPressed: () {
-                if (parsedMesaId > 0 && listaProdutosTemporal.isNotEmpty) {
-                  Navigator.pushNamed(
-                    context,
-                    ResumenfinalView.routeName,
-                    arguments: {
-                      "productos": listaProdutosTemporal,
-                      "mesaId": parsedMesaId,
+            Tooltip(
+              message: "Guarda el pedido en la lista de pedidos",
+              child:
+                  /// Botón para confirmar y guardar el pedido final.
+                  ElevatedButton(
+                    onPressed: () {
+                      if (parsedMesaId <= 0 ||
+                          listaProdutosTemporal.isEmpty ||
+                          barViewModel
+                              .getListaPedidos()
+                              .map((e) => e.mesaId)
+                              .contains(parsedMesaId)) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Datos inválidos o mesa ocupada"),
+                          ),
+                        );
+                        return;
+                      }
+                      final pedidoCompleto = Pedido(
+                        mesaId: parsedMesaId,
+                        numProductos: listaProdutosTemporal.fold(
+                          0,
+                          (sum, p) => sum + p.cantidad,
+                        ),
+                        totalEuros: listaProdutosTemporal
+                            .map((e) => e.precio * e.cantidad)
+                            .fold(0.0, (a, b) => a + b),
+                      );
+                      Navigator.pop(context, pedidoCompleto);
                     },
-                  );
-                }
-              },
-              child: const Text("Ver resumen"),
+                    child: const Text("Guardar pedido"),
+                  ),
+            ),
+            const SizedBox(height: 16),
+            Tooltip(
+              message: "Ver el resumen del pedido",
+              child:
+                  /// Botón para ver el resumen del pedido.
+                  ElevatedButton(
+                    onPressed: () {
+                      if (parsedMesaId > 0 &&
+                          listaProdutosTemporal.isNotEmpty) {
+                        Navigator.pushNamed(
+                          context,
+                          ResumenfinalView.routeName,
+                          arguments: {
+                            "productos": listaProdutosTemporal,
+                            "mesaId": parsedMesaId,
+                          },
+                        );
+                      }
+                    },
+                    child: const Text("Ver resumen"),
+                  ),
             ),
           ],
         ),

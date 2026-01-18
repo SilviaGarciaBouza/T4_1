@@ -180,24 +180,28 @@ class _SeleccionproductoviewState extends State<Seleccionproductoview> {
                 children: [
                   /// Botón para confirmar la selección y devolver solo productos con cantidad.
                   Flexible(
-                    child: ElevatedButton(
-                      onPressed: () => {
-                        Navigator.pop(
-                          context,
-                          copiaLista.where((e) => e.cantidad > 0).toList(),
+                    child: Tooltip(
+                      message: "Guardar selección",
+
+                      child: ElevatedButton(
+                        onPressed: () => {
+                          Navigator.pop(
+                            context,
+                            copiaLista.where((e) => e.cantidad > 0).toList(),
+                          ),
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStateProperty.all<Color>(
+                            const Color.fromARGB(255, 148, 189, 177),
+                          ),
+                          foregroundColor: WidgetStateProperty.all<Color>(
+                            Colors.brown,
+                          ),
                         ),
-                      },
-                      style: ButtonStyle(
-                        backgroundColor: WidgetStateProperty.all<Color>(
-                          const Color.fromARGB(255, 148, 189, 177),
+                        child: const Text(
+                          "Confirmar",
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        foregroundColor: WidgetStateProperty.all<Color>(
-                          Colors.brown,
-                        ),
-                      ),
-                      child: const Text(
-                        "Confirmar",
-                        style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
@@ -205,19 +209,23 @@ class _SeleccionproductoviewState extends State<Seleccionproductoview> {
 
                   /// Botón para cerrar la pantalla sin guardar cambios.
                   Flexible(
-                    child: ElevatedButton(
-                      onPressed: () => Navigator.pop(context),
-                      style: ButtonStyle(
-                        backgroundColor: WidgetStateProperty.all<Color>(
-                          const Color(0xFFFFAC8D),
+                    child: Tooltip(
+                      message: "Volver sin aplicar cambios",
+
+                      child: ElevatedButton(
+                        onPressed: () => Navigator.pop(context),
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStateProperty.all<Color>(
+                            const Color(0xFFFFAC8D),
+                          ),
+                          foregroundColor: WidgetStateProperty.all<Color>(
+                            Colors.white,
+                          ),
                         ),
-                        foregroundColor: WidgetStateProperty.all<Color>(
-                          Colors.white,
+                        child: const Text(
+                          "Cancelar",
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                      ),
-                      child: const Text(
-                        "Cancelar",
-                        style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
