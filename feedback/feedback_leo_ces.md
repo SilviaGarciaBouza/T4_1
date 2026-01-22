@@ -23,7 +23,7 @@ En general, el proyecto se ve muy completo cumpliendo con todos los puntos del e
 
 ## 4. Manual de Usuario
 
-- **Valoración:** Muy completo, bien estructurado y fácil de navegar por él..
+- **Valoración:** Muy completo, bien estructurado y fácil de navegar por él.
 
 ## 5. Guía de Despliegue
 
