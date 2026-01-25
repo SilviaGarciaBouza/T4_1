@@ -25,6 +25,8 @@ El proyecto utiliza dos tipos de navegación:
 - Navegación **Imperativa** (`Navigator.push`).
 - Navegación con **Ruta con Nombre** (`Navigator.pushNamed`).
 
+---
+
 ## Cómo usar la aplicación
 1.  Abre la terminal en la carpeta principal.
 2.  Ejecuta `flutter pub get`.
