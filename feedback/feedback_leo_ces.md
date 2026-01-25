@@ -23,8 +23,8 @@ En general, el proyecto se ve muy completo cumpliendo con todos los puntos del e
 
 ## 4. Manual de Usuario
 
-- **Valoración:** Muy completo, bien estructurado y fácil de navegar por él.
+- **Valoración:** Muy completo, bien estructurado y fácil de navegar por él. Me parece muy buena decisión ir poniendo imágenes de cada pantalla de la aplicación para ir explicándola.
 
 ## 5. Guía de Despliegue
 
-- **Valoración:** Instrucciones claras y precisas.
+- **Valoración:** Instrucciones claras y precisas para desplegar en android con apk (aunque faltaría con aab para subir a Google Play Store). Falta el despliegue para dispositivos con IOS, web y escritorio.
